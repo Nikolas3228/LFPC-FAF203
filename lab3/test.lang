@@ -1,0 +1,5 @@
+
+int multiply ( int i , int w ){
+    return add ( i , i * j ) ;
+}
+
