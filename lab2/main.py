@@ -9,7 +9,6 @@ grammar = [
     '2 b 3'
 ]
 
-#using this function we are representing our NFA as a dictionary of dictionaries.
 #for each state we create a dictionary which is keyed by the letters of our alphabet {a,b}
 #and the global dictionary is keyed by the states of our NFA
 
@@ -37,10 +36,11 @@ def NFAtoDFA(nfa):
 
     states = []
     values = []
-
+#add stated to new array
     for state in nfa:
         states.append(state)
 
+#check if new states exists
     for state in nfa:
         for value in nfa[state]:
 
@@ -50,12 +50,12 @@ def NFAtoDFA(nfa):
             else:
                 if not nfa[state][value][0] in states:
                     states.append(nfa[state][value][0])
-
+#check new transitions
     for state in nfa:
         for value in nfa[state]:
             if not value in values:
                 values.append(value)
-
+#create an empty list for new states
     for state in states:
         if not state in nfa:
             newState = list(state)
