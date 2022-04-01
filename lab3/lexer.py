@@ -1,15 +1,8 @@
-import re
-
 KEYWORD = ["if", "else", "while", "for", "print", "scan", "return", "switch", "case", "break", "fun", "goto","default"]
 SEPARATOR = ['(', ')', '{', '}', '[', ']',',','=']
 OPERATOR = ['-', '+', '*', '/', '%']
 DATA_TYPE = ['int', 'float','string', 'bool','void']
 BOOL_VAL = ['True','False']
-
-
-
-
-
 
 class Lexer(object):
     def __init__(self, source_code):
@@ -47,23 +40,30 @@ class Lexer(object):
             elif word_list in DATA_TYPE:
                 tokens.append(["DATA_TYPE", word_list])
 
-            #Token for "COMMENT"
-            elif word_list in "#" :
-                tokens.append(["COMMENT", word_list])
-
             #Token for "BOOL_VAL"
             elif word_list in BOOL_VAL:
                 tokens.append(["BOOL_VAL", word_list])
             
+            elif word_list[0] == '"' and  word_list[-1] == '"' :
+                tokens.append(["STRING", word_list[1:-1]])   
+            #Token for "COMMENT"    
+            elif word_list[0] == '#' :
+                comment = ""
+                if '\n' not in word_list:
+                    comment += word_list
+                    source_index +=1
+                    word_list  = source_code[source_index]
+                tokens.append(['COMMENT', comment[1:]])
+
             #Token for any unspecified word
-            elif re.match('[a-z]', word_list) or re.match('[A-Z]', word_list):
+            elif word_list.isalpha():
                 if word_list[-1] == ";" :
                     tokens.append(["IDENTIFIER", word_list[0:len(word_list)-1]])
                 else: 
                     tokens.append(['IDENTIFIER', word_list])
 
 
-            elif re.match('[0-9]', word_list):
+            elif word_list.isdigit():
                 if word_list[-1] == ";" :
                     tokens.append(["INTEGER", word_list[0:len(word_list)-1]])
                 else: 
