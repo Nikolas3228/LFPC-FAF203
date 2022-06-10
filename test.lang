@@ -1,0 +1,13 @@
+S -> aB
+S -> bA
+S -> b
+A -> b
+A -> aD
+A -> AS
+A -> AB
+A -> $
+B -> a
+B -> bS
+C -> AB
+D -> BB
+*
